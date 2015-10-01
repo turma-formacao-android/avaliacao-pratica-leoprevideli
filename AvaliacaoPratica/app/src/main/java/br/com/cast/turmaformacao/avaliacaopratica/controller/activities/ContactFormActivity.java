@@ -1,12 +1,16 @@
 package br.com.cast.turmaformacao.avaliacaopratica.controller.activities;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import br.com.cast.turmaformacao.avaliacaopratica.R;
+import br.com.cast.turmaformacao.avaliacaopratica.controller.asynctasks.FindAddressOnWeb;
 import br.com.cast.turmaformacao.avaliacaopratica.model.entities.Address;
 import br.com.cast.turmaformacao.avaliacaopratica.model.entities.Contact;
 import br.com.cast.turmaformacao.avaliacaopratica.util.FormHelper;
@@ -22,6 +26,7 @@ public class ContactFormActivity extends AppCompatActivity{
     private EditText contact_form_et_address_neighborhood;
     private EditText contact_form_et_address_city;
     private EditText contact_form_et_address_state;
+    private Button contact_form_bt_search_zipcode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +86,37 @@ public class ContactFormActivity extends AppCompatActivity{
         address.setState(contact_form_et_address_state.getText().toString());
 
         contact.setAddress(address);
+    }
+
+    private void bindButtonFindCep() {
+        contact_form_bt_search_zipcode = (Button) findViewById(R.id.contact_form_bt_search_zipcode);
+        contact_form_bt_search_zipcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new FindAddressOnWeb(){
+                    private ProgressDialog progressDialog;
+
+                    @Override
+                    protected void onPreExecute() {
+                        super.onPreExecute();
+                        progressDialog = new ProgressDialog(ContactFormActivity.this);
+                        progressDialog.setMessage("Searching address...");
+                        progressDialog.show();
+                    }
+
+                    @Override
+                    protected void onPostExecute(Address result) {
+                        super.onPostExecute(result);
+                        contact_form_et_address_type.setText(result.getType());
+                        contact_form_et_address_street.setText(result.getStreet());
+                        contact_form_et_address_neighborhood.setText(result.getNeighborhood());
+                        contact_form_et_address_city.setText(result.getCity());
+                        contact_form_et_address_state.setText(result.getState());
+                        progressDialog.dismiss();
+                    }
+                }.execute(contact_form_et_zipcode.getText().toString());
+            }
+        });
     }
 
     private void bindEditTexts(){

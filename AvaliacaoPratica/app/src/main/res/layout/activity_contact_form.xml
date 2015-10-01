@@ -15,19 +15,32 @@
 
     </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
-
-    <com.wrapp.floatlabelededittext.FloatLabeledEditText
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/contact_form_et_zipcode"
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Zipcode"/>
+            android:layout_height="wrap_content">
 
-    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+            <EditText
+                android:id="@+id/contact_form_et_zipcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Zipcode"
+                android:layout_weight="7" />
 
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+            <Button
+                android:id="@+id/contact_form_bt_search_zipcode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="Search" />
+
+    </LinearLayout>
 
     <com.wrapp.floatlabelededittext.FloatLabeledEditText
         android:layout_width="match_parent"
