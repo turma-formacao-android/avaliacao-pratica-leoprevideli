@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ContactsListActivity">
+
+
+    <item android:id="@+id/menu_form_save"
+          android:title="@string/menu_save"
+          android:orderInCategory="100"
+          app:showAsAction="always"
+          android:icon="@mipmap/ic_action_content_save"/>
+
+</menu>
