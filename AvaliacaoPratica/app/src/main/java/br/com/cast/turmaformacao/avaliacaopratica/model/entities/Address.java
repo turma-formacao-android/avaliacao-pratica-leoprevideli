@@ -4,19 +4,37 @@ package br.com.cast.turmaformacao.avaliacaopratica.model.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Address implements Parcelable {
 
+    private Long id;
+
+    @JsonProperty("cep")
     private String zipCode;
 
+    @JsonProperty("tipoDeLogradouro")
     private String type;
 
+    @JsonProperty("logradouro")
     private String street;
 
+    @JsonProperty("bairro")
     private String neighborhood;
 
+    @JsonProperty("cidade")
     private String city;
 
+    @JsonProperty("estado")
     private String state;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getZipCode() {
         return zipCode;
@@ -73,6 +91,8 @@ public class Address implements Parcelable {
 
         Address address = (Address) o;
 
+        if (getId() != null ? !getId().equals(address.getId()) : address.getId() != null)
+            return false;
         if (getZipCode() != null ? !getZipCode().equals(address.getZipCode()) : address.getZipCode() != null)
             return false;
         if (getType() != null ? !getType().equals(address.getType()) : address.getType() != null)
@@ -89,7 +109,8 @@ public class Address implements Parcelable {
 
     @Override
     public int hashCode() {
-        int result = getZipCode() != null ? getZipCode().hashCode() : 0;
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getZipCode() != null ? getZipCode().hashCode() : 0);
         result = 31 * result + (getType() != null ? getType().hashCode() : 0);
         result = 31 * result + (getStreet() != null ? getStreet().hashCode() : 0);
         result = 31 * result + (getNeighborhood() != null ? getNeighborhood().hashCode() : 0);
@@ -101,7 +122,8 @@ public class Address implements Parcelable {
     @Override
     public String toString() {
         return "Address{" +
-                "zipCode='" + zipCode + '\'' +
+                "id=" + id +
+                ", zipCode='" + zipCode + '\'' +
                 ", type='" + type + '\'' +
                 ", street='" + street + '\'' +
                 ", neighborhood='" + neighborhood + '\'' +
@@ -117,6 +139,7 @@ public class Address implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.id);
         dest.writeString(this.zipCode);
         dest.writeString(this.type);
         dest.writeString(this.street);
@@ -129,6 +152,7 @@ public class Address implements Parcelable {
     }
 
     protected Address(Parcel in) {
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
         this.zipCode = in.readString();
         this.type = in.readString();
         this.street = in.readString();
@@ -137,7 +161,7 @@ public class Address implements Parcelable {
         this.state = in.readString();
     }
 
-    public static final Parcelable.Creator<Address> CREATOR = new Parcelable.Creator<Address>() {
+    public static final Creator<Address> CREATOR = new Creator<Address>() {
         public Address createFromParcel(Parcel source) {
             return new Address(source);
         }

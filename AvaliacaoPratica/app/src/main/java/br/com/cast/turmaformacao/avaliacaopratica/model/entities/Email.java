@@ -10,6 +10,8 @@ public class Email implements Parcelable {
 
     private String emailAddress;
 
+    private Long contactId;
+
     public Long getId() {
         return id;
     }
@@ -26,6 +28,14 @@ public class Email implements Parcelable {
         this.emailAddress = emailAddress;
     }
 
+    public Long getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(Long contactId) {
+        this.contactId = contactId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -34,7 +44,9 @@ public class Email implements Parcelable {
         Email email = (Email) o;
 
         if (getId() != null ? !getId().equals(email.getId()) : email.getId() != null) return false;
-        return !(getEmailAddress() != null ? !getEmailAddress().equals(email.getEmailAddress()) : email.getEmailAddress() != null);
+        if (getEmailAddress() != null ? !getEmailAddress().equals(email.getEmailAddress()) : email.getEmailAddress() != null)
+            return false;
+        return !(getContactId() != null ? !getContactId().equals(email.getContactId()) : email.getContactId() != null);
 
     }
 
@@ -42,6 +54,7 @@ public class Email implements Parcelable {
     public int hashCode() {
         int result = getId() != null ? getId().hashCode() : 0;
         result = 31 * result + (getEmailAddress() != null ? getEmailAddress().hashCode() : 0);
+        result = 31 * result + (getContactId() != null ? getContactId().hashCode() : 0);
         return result;
     }
 
@@ -50,6 +63,7 @@ public class Email implements Parcelable {
         return "Email{" +
                 "id=" + id +
                 ", emailAddress='" + emailAddress + '\'' +
+                ", contactId=" + contactId +
                 '}';
     }
 
@@ -62,6 +76,7 @@ public class Email implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(this.id);
         dest.writeString(this.emailAddress);
+        dest.writeValue(this.contactId);
     }
 
     public Email() {
@@ -70,9 +85,10 @@ public class Email implements Parcelable {
     protected Email(Parcel in) {
         this.id = (Long) in.readValue(Long.class.getClassLoader());
         this.emailAddress = in.readString();
+        this.contactId = (Long) in.readValue(Long.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<Email> CREATOR = new Parcelable.Creator<Email>() {
+    public static final Creator<Email> CREATOR = new Creator<Email>() {
         public Email createFromParcel(Parcel source) {
             return new Email(source);
         }

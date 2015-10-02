@@ -11,20 +11,22 @@ import br.com.cast.turmaformacao.avaliacaopratica.model.entities.Address;
 public class AddressContract {
 
     public static final String TABLE = "address";
+    public static final String ID = "id";
     public static final String ZIPCODE = "zipcode";
     public static final String TYPE = "type";
     public static final String STREET = "street";
     public static final String NEIGHBORHOOD = "neighborhood";
     public static final String CITY = "city";
     public static final String STATE = "state";
-    public static final String[] COLUMNS = { ZIPCODE, TYPE, STREET, NEIGHBORHOOD, CITY, STATE };
+    public static final String[] COLUMNS = { ID, ZIPCODE, TYPE, STREET, NEIGHBORHOOD, CITY, STATE };
 
     public static String getCreateTableScript(){
         StringBuilder sql = new StringBuilder();
         sql.append(" CREATE TABLE ");
         sql.append(TABLE);
         sql.append(" ( ");
-        sql.append(ZIPCODE + " TEXT PRIMARY KEY, ");
+        sql.append(ID + " INTEGER PRIMARY KEY, ");
+        sql.append(ZIPCODE + " TEXT NOT NULL, ");
         sql.append(TYPE + " TEXT NOT NULL, ");
         sql.append(STREET + " TEXT NOT NULL, ");
         sql.append(NEIGHBORHOOD + " TEXT NOT NULL, ");
@@ -36,6 +38,7 @@ public class AddressContract {
 
     public static ContentValues getContentValues(Address address){
         ContentValues values = new ContentValues();
+        values.put(AddressContract.ID, address.getId());
         values.put(AddressContract.ZIPCODE, address.getZipCode());
         values.put(AddressContract.TYPE, address.getType());
         values.put(AddressContract.STREET, address.getStreet());
@@ -48,6 +51,7 @@ public class AddressContract {
     public static Address getAddress(Cursor cursor) {
         if (!cursor.isBeforeFirst() || cursor.moveToNext()) {
             Address address = new Address();
+            address.setId((cursor.getLong(cursor.getColumnIndex(ID))));
             address.setZipCode(cursor.getString(cursor.getColumnIndex(ZIPCODE)));
             address.setType(cursor.getString(cursor.getColumnIndex(TYPE)));
             address.setStreet(cursor.getString(cursor.getColumnIndex(STREET)));

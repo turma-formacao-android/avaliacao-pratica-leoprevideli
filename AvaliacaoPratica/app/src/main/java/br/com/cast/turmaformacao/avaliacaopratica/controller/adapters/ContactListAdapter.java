@@ -22,6 +22,11 @@ public class ContactListAdapter extends BaseAdapter{
         this.contactList = new ArrayList<>();
     }
 
+    public void setDataValues(List<Contact> values) {
+        contactList.clear();
+        contactList.addAll(values);
+    }
+
     @Override
     public int getCount() {
         return contactList.size();

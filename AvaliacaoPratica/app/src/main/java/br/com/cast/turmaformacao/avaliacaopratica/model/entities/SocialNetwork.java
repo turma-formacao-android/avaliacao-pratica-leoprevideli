@@ -11,6 +11,8 @@ public class SocialNetwork implements Parcelable {
 
     private String url;
 
+    private Long contactId;
+
     public Long getId() {
         return id;
     }
@@ -35,6 +37,14 @@ public class SocialNetwork implements Parcelable {
         this.url = url;
     }
 
+    public Long getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(Long contactId) {
+        this.contactId = contactId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,7 +55,9 @@ public class SocialNetwork implements Parcelable {
         if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
         if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null)
             return false;
-        return !(getUrl() != null ? !getUrl().equals(that.getUrl()) : that.getUrl() != null);
+        if (getUrl() != null ? !getUrl().equals(that.getUrl()) : that.getUrl() != null)
+            return false;
+        return !(getContactId() != null ? !getContactId().equals(that.getContactId()) : that.getContactId() != null);
 
     }
 
@@ -54,6 +66,7 @@ public class SocialNetwork implements Parcelable {
         int result = getId() != null ? getId().hashCode() : 0;
         result = 31 * result + (getName() != null ? getName().hashCode() : 0);
         result = 31 * result + (getUrl() != null ? getUrl().hashCode() : 0);
+        result = 31 * result + (getContactId() != null ? getContactId().hashCode() : 0);
         return result;
     }
 
@@ -63,6 +76,7 @@ public class SocialNetwork implements Parcelable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
+                ", contactId=" + contactId +
                 '}';
     }
 
@@ -76,6 +90,7 @@ public class SocialNetwork implements Parcelable {
         dest.writeValue(this.id);
         dest.writeString(this.name);
         dest.writeString(this.url);
+        dest.writeValue(this.contactId);
     }
 
     public SocialNetwork() {
@@ -85,9 +100,10 @@ public class SocialNetwork implements Parcelable {
         this.id = (Long) in.readValue(Long.class.getClassLoader());
         this.name = in.readString();
         this.url = in.readString();
+        this.contactId = (Long) in.readValue(Long.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<SocialNetwork> CREATOR = new Parcelable.Creator<SocialNetwork>() {
+    public static final Creator<SocialNetwork> CREATOR = new Creator<SocialNetwork>() {
         public SocialNetwork createFromParcel(Parcel source) {
             return new SocialNetwork(source);
         }

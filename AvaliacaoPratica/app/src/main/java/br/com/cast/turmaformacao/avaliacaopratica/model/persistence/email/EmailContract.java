@@ -6,6 +6,8 @@ import android.database.Cursor;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.cast.turmaformacao.avaliacaopratica.model.entities.Email;
+
 public class EmailContract {
 
     public static final String TABLE = "email";
@@ -27,26 +29,28 @@ public class EmailContract {
         return sql.toString();
     }
 
-    public static ContentValues getContentValues(String emailAddress, Long contactId){
+    public static ContentValues getContentValues(Email email){
         ContentValues values = new ContentValues();
-        values.put(EmailContract.EMAIL_ADDRESS, emailAddress);
-        values.put(EmailContract.CONTACT_ID, contactId);
+        values.put(EmailContract.ID, email.getId());
+        values.put(EmailContract.EMAIL_ADDRESS, email.getEmailAddress());
+        values.put(EmailContract.CONTACT_ID, email.getContactId());
         return values;
     }
 
-    public static String getEmail(Cursor cursor) {
-        if (!cursor.isBeforeFirst() || cursor.moveToNext()) {
-            return cursor.getString(cursor.getColumnIndex(EmailContract.EMAIL_ADDRESS));
-        }
-        return null;
+    public static Email getEmail(Cursor cursor) {
+        Email email = new Email();
+        email.setId(cursor.getLong(cursor.getColumnIndex(EmailContract.ID)));
+        email.setEmailAddress(cursor.getString(cursor.getColumnIndex(EmailContract.EMAIL_ADDRESS)));
+        email.setContactId(cursor.getLong(cursor.getColumnIndex(EmailContract.CONTACT_ID)));
+        return email;
     }
 
-    public static List<String> getEmails(Cursor cursor) {
-        ArrayList<String> tasks = new ArrayList<>();
+    public static List<Email> getEmails(Cursor cursor) {
+        ArrayList<Email> emails = new ArrayList<>();
         while (cursor.moveToNext()) {
-            tasks.add(getEmail(cursor));
+            emails.add(getEmail(cursor));
         }
-        return tasks;
+        return emails;
     }
 
 }

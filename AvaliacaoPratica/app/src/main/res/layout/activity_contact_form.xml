@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -15,32 +21,27 @@
 
     </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
-    <LinearLayout
+
+    <com.wrapp.floatlabelededittext.FloatLabeledEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/contact_form_et_zipcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Zipcode"
+            android:layout_weight="7" />
+
+    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+    <Button
+        android:id="@+id/contact_form_bt_search_zipcode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_weight="3"
+        android:text="Search" />
 
-        <com.wrapp.floatlabelededittext.FloatLabeledEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/contact_form_et_zipcode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Zipcode"
-                android:layout_weight="7" />
-
-        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
-
-            <Button
-                android:id="@+id/contact_form_bt_search_zipcode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="Search" />
-
-    </LinearLayout>
 
     <com.wrapp.floatlabelededittext.FloatLabeledEditText
         android:layout_width="match_parent"
@@ -107,4 +108,133 @@
     </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
 
+    <LinearLayout
+        android:id="@+id/contact_form_linear_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/contact_form_tv_phone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:text="@string/lbl_phone"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <ImageButton
+                android:id="@+id/contact_form_bt_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:background="@android:color/transparent"
+                android:src="@mipmap/ic_add_new_et" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/contact_form_et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:hint="@string/lbl_phone" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/contact_form_linear_social_network"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/contact_form_tv_social_network"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:text="@string/lbl_social_network"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <ImageButton
+                android:id="@+id/contact_form_bt_social_network"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:background="@android:color/transparent"
+                android:src="@mipmap/ic_add_new_et" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/contact_form_et_social_network_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="5"
+            android:hint="@string/lbl_social_network_singular"
+            />
+
+        <EditText
+            android:id="@+id/contact_form_et_social_network_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="5"
+            android:hint="@string/lbl_url_social_network"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/contact_form_linear_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/contact_form_tv_email"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:text="Emails"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <ImageButton
+                android:id="@+id/contact_form_bt_email"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:background="@android:color/transparent"
+                android:src="@mipmap/ic_add_new_et" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/contact_form_et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:inputType="textEmailAddress"
+            android:hint="@string/lbl_email" />
+
+    </LinearLayout>
+
+
+
+
 </LinearLayout>
+</ScrollView>

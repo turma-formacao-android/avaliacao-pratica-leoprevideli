@@ -9,6 +9,8 @@ public class Phone implements Parcelable {
 
     private String phoneNumber;
 
+    private Long contactId;
+
     public Long getId() {
         return id;
     }
@@ -25,6 +27,14 @@ public class Phone implements Parcelable {
         this.phoneNumber = phoneNumber;
     }
 
+    public Long getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(Long contactId) {
+        this.contactId = contactId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -33,7 +43,9 @@ public class Phone implements Parcelable {
         Phone phone = (Phone) o;
 
         if (getId() != null ? !getId().equals(phone.getId()) : phone.getId() != null) return false;
-        return !(getPhoneNumber() != null ? !getPhoneNumber().equals(phone.getPhoneNumber()) : phone.getPhoneNumber() != null);
+        if (getPhoneNumber() != null ? !getPhoneNumber().equals(phone.getPhoneNumber()) : phone.getPhoneNumber() != null)
+            return false;
+        return !(getContactId() != null ? !getContactId().equals(phone.getContactId()) : phone.getContactId() != null);
 
     }
 
@@ -41,6 +53,7 @@ public class Phone implements Parcelable {
     public int hashCode() {
         int result = getId() != null ? getId().hashCode() : 0;
         result = 31 * result + (getPhoneNumber() != null ? getPhoneNumber().hashCode() : 0);
+        result = 31 * result + (getContactId() != null ? getContactId().hashCode() : 0);
         return result;
     }
 
@@ -49,6 +62,7 @@ public class Phone implements Parcelable {
         return "Phone{" +
                 "id=" + id +
                 ", phoneNumber='" + phoneNumber + '\'' +
+                ", contactId=" + contactId +
                 '}';
     }
 
@@ -61,6 +75,7 @@ public class Phone implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(this.id);
         dest.writeString(this.phoneNumber);
+        dest.writeValue(this.contactId);
     }
 
     public Phone() {
@@ -69,9 +84,10 @@ public class Phone implements Parcelable {
     protected Phone(Parcel in) {
         this.id = (Long) in.readValue(Long.class.getClassLoader());
         this.phoneNumber = in.readString();
+        this.contactId = (Long) in.readValue(Long.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<Phone> CREATOR = new Parcelable.Creator<Phone>() {
+    public static final Creator<Phone> CREATOR = new Creator<Phone>() {
         public Phone createFromParcel(Parcel source) {
             return new Phone(source);
         }

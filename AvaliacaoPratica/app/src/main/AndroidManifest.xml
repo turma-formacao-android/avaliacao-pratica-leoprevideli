@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.cast.turmaformacao.avaliacaopratica" >
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".ContactManagerApplication"
         android:allowBackup="true"
@@ -10,13 +12,18 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".controller.activities.ContactListActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AppCompat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".controller.activities.ContactFormActivity"
+            android:label="Contact List"
+            android:theme="@style/Theme.AppCompat"/>
     </application>
 
 </manifest>
