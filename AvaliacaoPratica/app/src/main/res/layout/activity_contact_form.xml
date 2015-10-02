@@ -21,6 +21,11 @@
 
     </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
+        <Button
+            android:id="@+id/btnContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search contact"/>
 
     <com.wrapp.floatlabelededittext.FloatLabeledEditText
         android:layout_width="match_parent"

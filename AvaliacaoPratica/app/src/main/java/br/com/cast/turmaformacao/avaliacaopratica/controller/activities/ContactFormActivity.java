@@ -1,9 +1,15 @@
 package br.com.cast.turmaformacao.avaliacaopratica.controller.activities;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,10 +47,9 @@ public class ContactFormActivity extends AppCompatActivity{
     private EditText contact_form_et_email;
     private EditText contact_form_et_phone;
     private Button contact_form_bt_search_zipcode;
+    private Button btnContact;
 
     private List<EditText> listPhones;
-    private List<EditText> contact_form_et_social_network_name;
-    private List<EditText> contact_form_et_social_network_url;
     private List<EditText> listEmails;
 
     ImageButton btnAddPhone;
@@ -56,10 +61,12 @@ public class ContactFormActivity extends AppCompatActivity{
         setContentView(R.layout.activity_contact_form);
         initContact();
 
+        btnContact = (Button) findViewById(R.id.btnContact);
         bindEditTexts();
         bindButtonFindCep();
         bindAddPhoneButton();
         bindAddEmailButton();
+        actionButton();
     }
 
     private void initContact() {
@@ -254,7 +261,43 @@ public class ContactFormActivity extends AppCompatActivity{
 
     }
 
+    public void actionButton(){
+        btnContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent goToSOContacts = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                goToSOContacts.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+                startActivityForResult(goToSOContacts, 999);
+            }
+        });
+    }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 999) {
+            if (resultCode == Activity.RESULT_OK) {
+                try {
+                    final Uri contactUri = data.getData();
+                    final String[] projection = {
+                            ContactsContract.CommonDataKinds.Identity.DISPLAY_NAME,
+                            ContactsContract.CommonDataKinds.Phone.NUMBER
+                    };
+                    final Cursor cursor = getContentResolver().query(contactUri, projection, null, null, null);
+                    cursor.moveToFirst();
+
+                    contact_form_et_name.setText(cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Identity.DISPLAY_NAME)));
+                    contact_form_et_phone.setText(cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+
+                    cursor.close();
+                } catch (Exception e) {
+                    Log.d("TAG", "Unexpected error");
+                }
+
+
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     private void bindAddPhoneButton(){
         btnAddPhone = (ImageButton) findViewById(R.id.contact_form_bt_phone);
@@ -298,7 +341,6 @@ public class ContactFormActivity extends AppCompatActivity{
             }
         });
     }
-
 
 
 }
